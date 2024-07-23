@@ -29,7 +29,7 @@ function PostPage() {
         //     body: JSON.stringify(student)
         // }).then(response => { 
         //     response.json().then(responseData => {
-        //         console.log(responseData);
+        //         console.log(responseData); 
         //     })
         // })
 
