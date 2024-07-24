@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // export default 했을 때 형태
+import React, { useEffect, useState } from 'react'; // export default 했을 때 형태
 // default를 뺏을 때 형태 (중괄호로 일단 감싸져있음) 
 import { COLOR_OPTIONS, SIZE_OPTIONS } from '../../constants/productOptions'; 
 import axios from 'axios';
@@ -11,6 +11,33 @@ function PostPage2(props) {
         sizeId: "",
         colorId: ""
     });
+
+    const [ sizeOptions, setSizeOptions ] = useState([]);
+    const [ colorOptions, setColorOptions ] = useState([]);
+
+    useEffect(() => {
+        const getSizes = async () => {
+            const response = await axios.get("http://localhost:8080/api/v1/sizes");
+            setSizeOptions(response.data);
+            setProduct(product => ({
+                    ...product,
+                    sizeId: response.data[0].sizeId
+            }))
+        }
+
+        const getColors = async () => {
+            const response = await axios.get("http://localhost:8080/api/v1/colors");
+            setColorOptions(response.data);
+            setProduct(product => ({
+                    ...product,
+                    colorId: response.data[0].colorId
+            }))
+        }
+        
+        getSizes();
+        getColors();
+
+    }, []);
 
     const handleInputChange = (e) => {
         setProduct(product => {
@@ -26,7 +53,7 @@ function PostPage2(props) {
     // JS가 await을 만나면 Promise가 처리될때까지 기다립니다(await) 
     const handleSubmitClick = async () => {
         try { // await는 Promise 앞에서만 달 수 있다
-            const response = await axios.post("http://localhost:8080/basic/product", product);
+            const response = await axios.post("http://localhost:8080/api/v1/product", product);
             console.log(response);
         } catch(error) {
             console.log(error);
@@ -54,19 +81,19 @@ function PostPage2(props) {
                 </p>
                 <p>
                     <label htmlFor="">사이즈</label>
-                    <select name="sizeId" onChange={handleInputChange}>
+                    <select name="sizeId" onChange={handleInputChange} value={product.sizeId}>
                         {   // 반복 돌릴땐 key값 잡아주기 나중에 DB와 키값도 맞춰야함??
-                            SIZE_OPTIONS.map(size => 
-                            <option key={size.id} value={size.id}>{size.name}</option>)
+                            sizeOptions.map(size => 
+                            <option key={size.sizeId} value={size.sizeId}>{size.sizeName}</option>)
                         }
                     </select>
                 </p>
                 <p>
                     <label htmlFor="">색상</label>
-                    <select name="colorId" onChange={handleInputChange}>
+                    <select name="colorId" onChange={handleInputChange} value={product.colorId}>
                         {
-                            COLOR_OPTIONS.map(color => 
-                            <option key={color.id} value={color.id}>{color.name}</option>)
+                            colorOptions.map(color => 
+                            <option key={color.colorId} value={color.colorId}>{color.colorName}</option>)
                         }
                     </select>
                 </p>
