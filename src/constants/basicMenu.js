@@ -1,5 +1,6 @@
 import { IoCreateOutline, IoSearchOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
+import { RiComputerLine } from "react-icons/ri";
 
 export const basic_Menu = [
     {
@@ -49,5 +50,12 @@ export const basic_Menu = [
         name: "색상 등록",
         path: "/async/basic/color/register",
         icon: <IoCreateOutline></IoCreateOutline>
+    },
+    {
+        id: 9,
+        name: "컴퓨터",
+        path: "/computer",
+        icon: <RiComputerLine></RiComputerLine>
     }
 ];
+    
