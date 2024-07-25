@@ -37,5 +37,17 @@ export const basic_Menu = [
         name: "Promise학습",
         path: "/async/basic/promise",
         icon: <IoCreateOutline></IoCreateOutline>
+    },
+    {
+        id: 7,
+        name: "사이즈 등록",
+        path: "/async/basic/size/register",
+        icon: <IoCreateOutline></IoCreateOutline>
+    },
+    {
+        id: 8,
+        name: "색상 등록",
+        path: "/async/basic/color/register",
+        icon: <IoCreateOutline></IoCreateOutline>
     }
 ];
